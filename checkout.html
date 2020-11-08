@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Accept a card payment</title>
+    <meta name="description" content="A demo of a card payment on Stripe" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/assets/styles/global.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="/client.js" defer></script>
+  </head>
+  <body>
+    
+    <form id="payment-form">
+        <div class="form-row inline">
+            <div class="col">
+              <label for="name">
+                Name
+              </label>
+              <input id="name" name="name" placeholder="Jenny Rosen" required>
+            </div>
+           
+            <div class="col">
+              <label for="email">
+                Email Address
+              </label>
+              <input id="email" name="email" type="email" placeholder="jenny.rosen@example.com"required>
+            </div>
+
+            <div class="col">
+              <label for="city">
+                City
+              </label>
+              <input id="city" name="city">
+            </div>
+
+            <div class="col">
+              <label for="state">
+                State
+              </label>
+              <input id="state" name="state">
+            </div>
+
+            <div class="col">
+              <label for="zip">
+                ZIP
+              </label>
+              <input id="postal_code" name="postal_code">
+            </div>
+
+          </div>
+        </br>
+
+       <br>
+       <button class="stripe" id="d1" disabled="false" onclick='hide()' >Add your child to the nice list</button>
+
+          <div class="col" id="children" style="display:none">
+            <label for="child-name">
+              Child Full Name
+            </label>
+            <input id="child-name" name="child-name">
+            
+            <label for="child-city">
+              City your child lives in
+            </label>
+            <input id="child-city" name="child-city">
+          </div>
+          <br>
+          <br>
+
+      <div id="card-element">
+        <label for="email">
+            Email Address
+          </label>
+          <input id="email" name="email" type="email" placeholder="jenny.rosen@example.com" required><!--Stripe.js injects the Card Element--></div>
+         
+
+      <button class="stripe" id="submit">
+        <div class="spinner hidden" id="spinner"></div>
+        <span id="button-text">Pay</span>
+      </button>
+      <p id="card-error" role="alert"></p>
+      <p style="color:green" class="result-message hidden">
+        Payment succeeded
+        <a href="" target="_blank"></a> 
+      </p>
+      
+      
+    </form>
+    
+  </body>
+</html>

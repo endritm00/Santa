@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="description" content="A demo of a card payment on Stripe" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- <link rel="stylesheet" href="/assets/styles/global.css" /> -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+  <script src="/client.js" defer></script>
+  <title></title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/styles/main.min.css" />
+  <link rel="stylesheet" type="text/css" href="assets/styles/foundation.css" />
+  <link rel="stylesheet" type="text/css" href="assets/styles/biba.css" />
+</head>
+
+<body>
+  <div class="wrapper">
+    <section class="section hero">
+      <div class="wrappers">
+        <div class="snow layer1 a"></div>
+        <div class="snow layer1"></div>
+        <div class="snow layer2 a"></div>
+        <div class="snow layer2"></div>
+        <div class="snow layer3 a"></div>
+        <div class="snow layer3"></div>
+      </div>
+      <div class="container">
+        <div class="row align-items-end">
+          <div class="col-12 col-lg-6">
+            <div class="hero__order d-flex align-items-center flex-column wow slideInLeft" data-wow-duration="2s">
+              <div class="hero__order-logo"><a href="#"><img src="assets/img/logo/logo.png" alt="Logo" /></a></div>
+              <div class="hero__order-head">
+                <p>Next schedule live stream:</p>
+              </div>
+              <div class="hero__order-date wow pulse" data-wow-duration="2s" data-wow-delay="2s">
+                <h2>November 28th</h2>
+                <p>November 28th</p>
+              </div>
+              <div class="hero__order-list-wrapp">
+                <ul class="hero__order-list d-flex flex-column">
+                  <li class="hero__order-item d-flex align-items-center">
+                    <div class="hero__order-item-icon"><img src="assets/img/icons/ice-crystal.png" alt="Icon" /></div>
+                    <div class="hero__order-item-text">
+                      <p>Live from the North Pole</p>
+                    </div>
+                  </li>
+                  <li class="hero__order-item d-flex align-items-center">
+                    <div class="hero__order-item-icon"><img src="assets/img/icons/time.png" alt="Icon" /></div>
+                    <div class="hero__order-item-text">
+                      <p>12:00 PM - 01:30 PM EST</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="hero__order-btn"><a href="#">
+                  <div class="link-decor">
+                    <div class="link-decor_group">
+                      <div class="link-decor_elem"></div>
+                      <div class="link-decor_elem"></div>
+                    </div>
+                    <div class="link-decor_group">
+                      <div class="link-decor_elem"></div>
+                      <div class="link-decor_elem"></div>
+                    </div>
+                  </div>
+                  <p>Order Ticket Now!</p>
+                </a></div>
+              <div class="hero__order-footer">
+                <p>Hurry! Tickets are still available.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 hero__col-right">
+            <div class="hero__info">
+              <div class="hero__info-head text-uppercase text-center">
+                <div class="link-decor">
+                  <div class="link-decor_group">
+                    <div class="link-decor_elem"></div>
+                    <div class="link-decor_elem"></div>
+                  </div>
+                  <div class="link-decor_group">
+                    <div class="link-decor_elem"></div>
+                    <div class="link-decor_elem"></div>
+                  </div>
+                  <div class="link-decor_group">
+                    <div class="link-decor_elem"></div>
+                    <div class="link-decor_elem"></div>
+                  </div>
+                </div>
+                <p class="pulse animated infinite">Live and interactive!</p>
+              </div>
+              <div class="hero__info-wrapp">
+                <div class="hero__info-img"><iframe src="https://www.youtube.com/embed/mN7LW0Y00kE" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe></div>
+                <div class="hero__info-content text-center">
+                  <div class="hero__info-content-text">
+                    <p>
+                      Join Santa, Mrs. Claus, and Santa’s helpers live from <br />the North Pole for an interactive
+                      show. </p>
+                    <p class="orange">Due to the interactive nature of the show, tickets are limited!</p>
+                  </div>
+                  <div class="hero__info-content-next">
+                    <p><span>Next Live Stream in: </span></p>
+                    <p><span id="daysUntilStream"> </span><span id="daysUntilStream1"></span></p>
+                    <p><span id="hoursUntilStream"> </span><span id="hoursUntilStream1"></span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section who">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="who__head-text text-center">
+              <h3>Here’s who you’ll meet during the interactive live stream:</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row who_margin-row">
+          <div class="col-12 col-sm-6">
+            <div class="who__head-wrapp who__head-wrapp_margin">
+              <div class="who__head-wrapp-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__head-wrapp-text text-center">
+                <p>Santa & Mrs. Claus</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="who__head-wrapp">
+              <div class="who__head-wrapp-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__head-wrapp-text text-center">
+                <p>Elf Val • Host</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fix">
+        <div class="who__slider">
+          <div class="who__slider-item">
+            <div class="who__slider-item-wrapp">
+              <div class="who__slider-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__slider-item-text text-center">
+                <p>Elf Carter</p>
+              </div>
+            </div>
+          </div>
+          <div class="who__slider-item">
+            <div class="who__slider-item-wrapp">
+              <div class="who__slider-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__slider-item-text text-center">
+                <p>Elf Jack</p>
+              </div>
+            </div>
+          </div>
+          <div class="who__slider-item">
+            <div class="who__slider-item-wrapp">
+              <div class="who__slider-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__slider-item-text text-center">
+                <p>Elf Jigisha</p>
+              </div>
+            </div>
+          </div>
+          <div class="who__slider-item">
+            <div class="who__slider-item-wrapp">
+              <div class="who__slider-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__slider-item-text text-center">
+                <p>Elf Sarah</p>
+              </div>
+            </div>
+          </div>
+          <div class="who__slider-item">
+            <div class="who__slider-item-wrapp">
+              <div class="who__slider-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__slider-item-text text-center">
+                <p>Elf Dougie</p>
+              </div>
+            </div>
+          </div>
+          <div class="who__slider-item">
+            <div class="who__slider-item-wrapp">
+              <div class="who__slider-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__slider-item-text text-center">
+                <p>Elf Matt</p>
+              </div>
+            </div>
+          </div>
+          <div class="who__slider-item">
+            <div class="who__slider-item-wrapp">
+              <div class="who__slider-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__slider-item-text text-center">
+                <p>Elf Colin</p>
+              </div>
+            </div>
+          </div>
+          <div class="who__slider-item">
+            <div class="who__slider-item-wrapp">
+              <div class="who__slider-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="who__slider-item-text text-center">
+                <p>Elf Liz</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="who__bonus d-flex justify-content-center align-items-center">
+              <div class="who__bonus-text text-uppercase">
+                <p>bonus!</p><span>bonus!</span>
+              </div>
+              <div class="who__bonus-desc">
+                <p>
+                  Order your ticket right now and receive a <br />free bonus videos filmed in the North Pole <br />with
+                  never seen-before footage! </p>
+              </div>
+              <div class="who__bonus-oder"><a href="#">
+                  <div class="link-decor">
+                    <div class="link-decor_group">
+                      <div class="link-decor_elem"></div>
+                      <div class="link-decor_elem"></div>
+                    </div>
+                    <div class="link-decor_group">
+                      <div class="link-decor_elem"></div>
+                      <div class="link-decor_elem"></div>
+                    </div>
+                  </div>
+                  <p>Order Ticket Now!</p>
+                </a>
+                <p>Admission is Limited!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section magic">
+      <div class="magic_decor"><img src="assets/img/backgrounds/lamps01.png" alt="lamps" /><img
+          src="assets/img/backgrounds/lamps02.png" alt="lamps" /></div>
+      <div class="container">
+        <div class="row magic_margin-row align-items-center">
+          <div class="col-12 col-lg-6">
+            <div class="magic__header wow fadeIn" data-wow-duration="2s">
+              <div class="magic__header-head">
+                <p>Santa’s Magic Portal</p><span>Santa’s Magic Portal</span>
+              </div>
+              <div class="magic__header-desc">
+                <p>
+                  Once you order your ticket, you’ll receive admission <br />to Santa’s Magic Portal. This is where you
+                  <br />will watch the live stream on November 28th. </p>
+                <p>
+                  Plus, Santa is asking for you to submit some <br />things he’ll use live during the stream!</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="magic__imac wow slideInRight" data-wow-duration="2.6s">
+              <div class="magic__imac-img"><img class="d-none d-md-block" src="assets/img/backgrounds/imac.png"
+                  alt="Imac" /><img class="d-block d-md-none" src="assets/img/backgrounds/imac_phone.png" alt="Imac" />
+              </div>
+              <div class="magic__imac-vid d-none d-md-block vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row magic_height-row">
+          <div class="col-12 wow pulse" data-wow-duration="2s">
+            <div class="magic-banner">
+              <div class="magic-banner-text text-center">
+                <p>Here’s a preview of the magic you’ll experience during the stream:</p><span>Here’s a preview of the
+                  magic you’ll experience during the stream:</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="magic-item wow slideInLeft" data-wow-duration="2s" data-wow-delay=".1s">
+              <div class="magic-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="magic-item-text">
+                <p>
+                  Story time with Santa<br />and Mrs. Claus</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="magic-item wow slideInLeft" data-wow-duration="2s" data-wow-delay=".3s">
+              <div class="magic-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="magic-item-text">
+                <p>
+                  Sing along during<br />Elf Karaoke</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="magic-item wow slideInLeft" data-wow-duration="2s" data-wow-delay=".5s">
+              <div class="magic-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="magic-item-text">
+                <p>
+                  Special performance by the world<br />famous North Pole Carolers</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="magic-item wow slideInLeft" data-wow-duration="2s" data-wow-delay=".2s">
+              <div class="magic-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="magic-item-text">
+                <p>
+                  If your child is on the nice list, it<br />will scroll on the screen!</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="magic-item wow slideInLeft" data-wow-duration="2s" data-wow-delay=".4s">
+              <div class="magic-item-vid vid__wrapper"><img class="d-bloc d-md-none"
+                  src="assets/img/contents/santa-photo.png" alt="Santa" />
+                <video class="d-none d-md-block" autoplay="true" muted="muted" loop="loop">
+                  <source src="assets/img/contents/bgvideo-5.mp4" /><img src="assets/img/contents/santa-photo.png"
+                    title="Your browser does not support the <video> tag" />
+                </video>
+              </div>
+              <div class="magic-item-text">
+                <p>
+                  Santa’s <br />coloring contest!</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="magic-item wow slideInLeft" data-wow-duration="2s" data-wow-delay=".6s">
+              <div class="magic-item-head">
+                <p>And so much more!</p>
+              </div>
+              <div class="magic-item-list">
+                <ul>
+                  <li>
+                    <p>Secrets from the North Pole</p>
+                  </li>
+                  <li>
+                    <p>Clips from the Elf Olympics</p>
+                  </li>
+                  <li>
+                    <p>Secrets from the North Pole</p>
+                  </li>
+                  <li>
+                    <p>and more and more and more…</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section purchase">
+      <div class="purchase__head">
+        <div class="container">
+          <div class="purchase__head-text">
+            <h4>Order your early bird ticket now before this event sells out!</h4>
+            <p>
+              Price for admission:
+              <del>$19.99 </del>for viewing on one device <br />EARLY BIRD PRICING... ORDER BEFORE 11/15: $14.99 for one
+              device.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="purchase__form-wrapp">
+        <div class="wrappers">
+          <div class="snow layer1 a"></div>
+          <div class="snow layer1"></div>
+          <div class="snow layer2 a"></div>
+          <div class="snow layer2"></div>
+          <div class="snow layer3 a"></div>
+          <div class="snow layer3"></div>
+        </div>
+        <div class="container">
+          <div class="row purchase__form form1" id="payment-form" autocomplete="off">
+            <div class="purchase__form_bg-top"><img src="assets/img/backgrounds/snow.png" alt="Snow"/></div>
+            <div class="col-12 col-lg-6 purchase__form-left">
+              <div class="form-row">
+                <div class="form-group col-12 col-sm-6">
+                  <label for="firstName">
+                    <p>First Name</p>
+                  </label>
+                  <input type="text" id="firstName" />
+                </div>
+                <div class="form-group col-12 col-sm-6">
+                  <label for="lastName">
+                    <p>Last Name</p>
+                  </label>
+                  <input type="text" id="lastName" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-12 col-sm-6">
+                  <label for="city">
+                    <p>City</p>
+                  </label>
+                  <input type="text" id="city" />
+                </div>
+                <div class="form-group col-6 col-sm-3">
+                  <label for="state">
+                    <p>State</p>
+                  </label>
+                  <input type="text" id="state" />
+                </div>
+                <div class="form-group col-6 col-sm-3">
+                  <label for="zip">
+                    <p>ZIP</p>
+                  </label>
+                  <input type="number" id="zip" />
+                </div>
+              </div>
+              <div class="form-row purchase__form-email">
+                <div class="form-group">
+                  <label for="email">
+                    <p>Email Address</p>
+                  </label>
+                  <input type="email" id="email" /><span>If you don’t receive your Magic Portal ID within 12 hours,
+                    please check your spam!</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6 purchase__form-right">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="w-100" for="card">
+                    <p>Credit Card Number</p>
+                  </label>
+                  <div class="purchase__form-card-wrapp w-100">
+                    <input type="text" name="card-number" disabled="disabled" id="credit-card">
+                    <label for="card-number" class="card-input">
+                    
+                  </label>
+                    <div class="purchase__form-card">
+                      <div class="" id="card-number">
+                        <label for="card-number" class="card-input">
+                          
+                        </label>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <label for="exp">
+                    <p>Exp. Date</p>
+                  </label>
+                  <!-- <div class="purchase__form-exp-wrapp"> -->
+                    <!-- <div class="purchase__form-exp"> -->
+                      <!-- <div class="purchase__form-exp-group"> -->
+                        <div class="card-expiry-wrapper">
+                          <div id="card-expiry">
+                            <label for="card-expiry">
+                              Card expiry
+                            </label>
+                          </div>
+                        </div>
+                      <!-- </div> -->
+                    <!-- </div> -->
+                  <!-- </div> -->
+                </div>
+                <div class="form-group col-6">
+                  <label for="sec">
+                    <p>Secutiry Code</p>
+                  </label>
+                  <div class="card-expiry-wrapper">
+                    <div id="card-cvc">
+                      <label for="card-cvc">
+                        CVC
+                      </label>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div id="card-number" class="purchase__form-card">
+                <label for="card-number" class="card-input">
+                    Card Number
+                  </label>
+                </div>
+                 
+                <div id="card-cvc">
+                  <label for="card-cvc">
+                    CVC
+                  </label>
+                  </div>
+
+                  <div id="card-expiry">
+                    <label for="card-expiry">
+                      Card expiry
+                    </label>
+
+                    </div> -->
+                    
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="d-flex align-items-center purchase__form-checkbox">
+                    <input type="checkbox" />
+                    <div class="fake-input"></div>
+                    <p>I agree to terms and conditions</p>
+                  </label>
+                </div>
+              </div>
+            </div>
+              <div class="col-12 purchase__form-full">
+                  <div class="form-row">
+                    <div class="purchase__form-footer-text form-group">
+                      <p>Add your child to the nice list</p>
+                      <p>Add your child to the nice list</p>
+                    </div>
+                    <div class="purchase__form-footer-desc form-group">
+                      <p>During the live stream, your childs name will be included in the list of name shown on Santa's Nice List.</p>
+                    </div>
+                  </div>
+                  <div class="form-row_duplicate">
+                    <div class="form-row form-row_hidden">
+                      <div class="form-row_active_close form-row_active_close_phone col-12">x</div>
+                      <div class="form-group col-xl-3 col-lg-4">
+                        <input type="text" name='child-firstName' id="child-firstName" placeholder="First Name"/>
+                      </div>
+                      <div class="form-group col-xl-3 col-lg-4">
+                        <input type="text" name='child-lastName' id="child-lastName" placeholder="Last Name Initial"/>
+                      </div>
+                      <div class="form-group col-xl-3 col-lg-4">
+                        <input type="text" placeholder="City your child live in"/>
+                        <div class="form-row_active_close form-row_active_close_phone_descktop">x</div>
+                      </div>
+                    </div>
+                  
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <div class="purchase__form-footer-add">
+                        <p><a href="#">+Add another child</a><span>
+                              to the list </span><i>(maximum of three names)</i></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row purchase__form-btn">
+                    <div class="form-group">
+                      <button class="stripe" id="submit-stripe-btn">
+                        <div class="spinner hidden" id="spinner"></div>
+      
+                        <div class="link-decor" id="button-text">
+                          <div class="link-decor_group">
+                            <div class="link-decor_elem"></div>
+                            <div class="link-decor_elem"></div>
+                          </div>
+                          <div class="link-decor_group">
+                            <div class="link-decor_elem"></div>
+                            <div class="link-decor_elem"></div>
+                          </div>
+                          <div class="link-decor_group">
+                            <div class="link-decor_elem"></div>
+                            <div class="link-decor_elem"></div>
+                          </div>
+                        </div>
+                        <p>Purchase Ticket </p>
+                        <p>• </p>
+                        <p>Total: $14.99</p>
+                      </button>
+                      
+      
+                    </div>
+                  </div>
+                </div>
+             
+            
+            <div class="purchase__important">
+              <div class="link-decor">
+                <div class="link-decor_group">
+                  <div class="link-decor_elem"></div>
+                  <div class="link-decor_elem"></div>
+                </div>
+                <div class="link-decor_group">
+                  <div class="link-decor_elem"></div>
+                  <div class="link-decor_elem"></div>
+                </div>
+                <div class="link-decor_group">
+                  <div class="link-decor_elem"></div>
+                  <div class="link-decor_elem"></div>
+                </div>
+              </div>
+              <div class="container">
+                <div class="container">
+                  <div class="row">
+                    <div class="col d-flex align-items-center justify-content-center">
+                      <div class="purchase-important__text">
+                        <p>IMPORTANT:</p>
+                      </div>
+                      <div class="purchase-important__desc text-center">
+                        <p>
+                          After your payment has processed, a link and code will be posted <br />on this page. Please
+                          write down the link and Magic Portal code.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row purchase__form form2" style="display:none" id="payment-form" autocomplete="off">
+           <div class="col-12">
+              <div class="row">
+                <div class="col-12">
+                  <h2>Review Order</h2>
+                </div>
+              </div>            
+              <div class="row">
+                <div class="col-12">
+                  
+            <div class="form-group col-12 col-sm-6">
+              <label for="child-firstName">
+                <p>Child First Name</p>
+              </label>
+              <input type="text" id="child-firstName" />
+            </div>
+            <div class="form-group col-12 col-sm-6">
+              <label for="child-lastName">
+                <p>Child Last Name</p>
+              </label>
+              <input type="text" id="child-lastName" />
+            </div>
+
+                </div>
+              </div>
+            <div class="form-group col-12 col-sm-3">
+            <label for="child-city">
+             <p> City your child lives in</p>
+            </label>
+            <input id="child-city" name="child-city">
+            </div>
+       
+           </div>
+          </div>
+
+
+          
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 col-12">
+            <div class="footer-logo"><a href="#"><img src="assets/img/logo/logo.png" alt="Logo"/></a></div>
+            <div class="footer-copyright">
+              <p>Copyright 2020, Dynamic Video Group, LLC</p>
+            </div>
+            <div class="footer-terms"><a href="#">Terms and Conditions</a><a href="#">Privacy Policy</a></div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <div class="footer-contacts">
+              <div class="footer-contacts-support">
+                <h2>Support and Contacts</h2>
+              </div>
+              <ul class="footer-contacts-list">
+                <li class="footer-contacts-item">
+                  <p><span>General questions:  </span><a href="mailto:Info@SantaStream.com">Info@SantaStream.com</a></p>
+                </li>
+                <li class="footer-contacts-item">
+                  <p><span>Payment questions: </span><a href="mailto:Payments@SantaStream.com">Payments@SantaStream.com</a></p>
+                </li>
+                <li class="footer-contacts-item">
+                  <p><span>Sreaming related questions: </span><a href="mailto:Streaming@SantaStream.com">Streaming@SantaStream.com</a></p>
+                </li>
+                <li class="footer-contacts-item">
+                  <p><span>Meida Inquiries: </span><a href="mailto:Media@SantaStream.com">Media@SantaStream.com</a></p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="./assets/js/foundation.js"></script>
+  <script src="./assets/js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+
+
+  #card-number, #card-expiry iframe{
+    width: 100% !important;
+    padding:20px;
+  }
+  .card-expiry-wrapper{
+      height: 50px !important;
+    font-size: 20px;
+    background: white !important;
+    width: 100%;
+    padding: 15px 15px;
+    border: 2px solid #8dd7f0;
+    border-radius: 10px;
+  }
+
+  iframe input{
+      padding: 26px 20px;
+  }
+  
+  body div .purchase__form-card{
+    padding:0 !important;
+  }
+  #card-number > div, #card-number iframe{
+      height: auto !important;
+  }
+  .first-wrapper{
+    width: 100%;
+    padding:0;
+  }
